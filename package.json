@@ -15,7 +15,8 @@
     "prepublish": "npm run build",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
     "fix": "yarn lint --fix --report-unused-disable-directives",
-    "test": "jest"
+    "test": "jest",
+    "postinstallDev": "husky install"
   },
   "author": "Metaphor",
   "license": "MIT",
@@ -34,13 +35,13 @@
     "@metaphor-xyz/eslint-config": "^2.0.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rushstack/eslint-patch": "^1.1.2",
-    "@stablelib/random": "^1.0.1",
     "@types/jest": "^27.0.3",
     "eslint": "^8.13.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.5",
+    "lint-staged": "^12.3.7",
     "rollup": "^2.64.0",
     "rollup-plugin-node-externals": "^4.0.0",
-    "semantic-release": "^18.0.1",
     "tslib": "^2.3.1",
     "typescript": "~4.4.2"
   },
