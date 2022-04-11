@@ -1,4 +1,4 @@
-import { ApolloCache, DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
+import { DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { mergeSchemas } from '@graphql-tools/schema';
@@ -16,11 +16,6 @@ export abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> ext
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type EnyoProvider = any;
-
-export interface ProvidersWithCache {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  cache: ApolloCache<any>;
-}
 
 export interface EnyoTypeDefOptions {
   extraTypeDefs?: DocumentNode;

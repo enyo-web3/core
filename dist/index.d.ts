@@ -1,4 +1,4 @@
-import { ApolloCache, DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
+import { DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { GraphQLSchema, DocumentNode } from 'graphql';
 export declare abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> extends EventTarget {
@@ -7,9 +7,6 @@ export declare abstract class EnyoSubgraph<Providers, TData = any, TVariables = 
     protected writeQuery(options: DataProxy.WriteQueryOptions<TData, TVariables>): void;
 }
 export declare type EnyoProvider = any;
-export interface ProvidersWithCache {
-    cache: ApolloCache<any>;
-}
 export interface EnyoTypeDefOptions {
     extraTypeDefs?: DocumentNode;
 }
