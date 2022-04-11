@@ -95,4 +95,4 @@ client.query({
 At this early stage, Metaphor is still incubating the project internally. Pull Requests are welcome, but are not guaranteed to be addressed until the project stabilizes more!
 
 ## License
-MIT License
+MIT License (and all dependencies)
