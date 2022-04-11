@@ -1,12 +1,17 @@
-import type { ApolloCache } from '@apollo/client';
+import { ApolloCache, DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { GraphQLSchema, DocumentNode } from 'graphql';
 
-export interface EnyoSubgraph<Providers> {
-  schema(providers: Providers): GraphQLSchema;
-  typeDefs(): DocumentNode;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> extends EventTarget {
+  abstract schema(providers: Providers): GraphQLSchema;
+  abstract typeDefs(): DocumentNode;
+
+  protected writeQuery(options: DataProxy.WriteQueryOptions<TData, TVariables>) {
+    this.dispatchEvent(new CustomEvent('writeQuery', { detail: options }));
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,15 +40,38 @@ export interface EnyoTypeDefOptions {
 // type RequiredProviders<T extends ReadonlyArray<EnyoSubgraph<EnyoProvider>>> =
 //   SubgraphProviders<T>[keyof SubgraphProviders<T>];
 
-export class EnyoSupergraph<Subgraphs extends ReadonlyArray<EnyoSubgraph<EnyoProvider>>> {
+export interface EnyoSupergraphOptions<Subgraphs, Providers> {
+  subgraphs: Subgraphs;
+  providers: Providers;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export class EnyoSupergraph<Subgraphs extends ReadonlyArray<EnyoSubgraph<EnyoProvider>>, TData = any> {
   subgraphs: Subgraphs;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   providers: any;
+  client: ApolloClient<TData>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(options: { subgraphs: Subgraphs; providers: any }) {
+  constructor(options: EnyoSupergraphOptions<Subgraphs, any> & ApolloClientOptions<TData>);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor(options: EnyoSupergraphOptions<Subgraphs, any>, apolloClient?: ApolloClient<TData>) {
     this.providers = options.providers;
     this.subgraphs = options.subgraphs;
+
+    for (const subgraph of this.subgraphs) {
+      subgraph.addEventListener('writeQuery', this.writeQuery.bind(this));
+    }
+
+    if (apolloClient) {
+      this.client = apolloClient;
+    } else {
+      // @ts-ignore
+      // note(carlos): ignoring here because we know if `apolloClient` is missing,
+      // then `options` includes the `ApolloClientOptions` parameters.
+      const client = new ApolloClient<TData>({ ...options, link: this.link(), typeDefs: this.typeDefs() });
+      this.client = client;
+    }
   }
 
   link(): SchemaLink {
@@ -56,5 +84,16 @@ export class EnyoSupergraph<Subgraphs extends ReadonlyArray<EnyoSubgraph<EnyoPro
     return options && options.extraTypeDefs
       ? mergeTypeDefs([...this.subgraphs.map(s => s.typeDefs()), options.extraTypeDefs])
       : mergeTypeDefs(this.subgraphs.map(s => s.typeDefs()));
+  }
+
+  setClient(client: ApolloClient<TData>) {
+    this.client = client;
+  }
+
+  private writeQuery(ev: Event) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const evt = ev as CustomEvent<DataProxy.WriteQueryOptions<TData, any>>;
+
+    this.client.writeQuery(evt.detail);
   }
 }

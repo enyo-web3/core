@@ -15,12 +15,12 @@ or
 ## Usage
 
 ```typescript
-import { ApolloClient, gql } from '@apollo/client';
 import { EnyoSupergraph } from '@enyo-web3/core';
 import { EthersProvider, WalletSubgraph } from '@enyo-web3/ethers';
 import { CeramicProvider, CeramicSubgraph } from '@enyo-web3/ceramic';
 import { ERC20Subgraph } from '@enyo-web3/erc20';
 import { ERC721Subgraph } from '@enyo-web3/erc721';
+import gql from 'graphql-tag';
 
 const supergraph = new EnyoSupergraph({
   subgraphs: [
@@ -36,10 +36,7 @@ const supergraph = new EnyoSupergraph({
   },
 });
 
-const client = new ApolloClient({
-  link: supergraph.link(),
-  typeDefs: supergraph.typeDefs(),
-});
+const client = supergraph.client; // ApolloClient
 
 client.query({
   query: gql`
