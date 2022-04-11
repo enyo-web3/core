@@ -79,10 +79,10 @@ client.query({
 - Enyo is designed for the browser, acting as a subgraph federation and stitching layer inside frontend applications. It could be easily used in a Server-Side Rendering environment or in an API server for federating APIs. However, `@enyo/core` and all the packages in this organization will prioritize the browser environment and will not implement functionality that would complicate purely browser-based apps. For server-side use cases, something like [Apollo Federation](https://www.apollographql.com/docs/federation/) may be more appropriate!
 
 ## Providers and Subgraphs
-**Status**
-:white_check_mark: Ready and actively Maintained
-:hammer: In development, experimental
-:warning: Not actively maintained
+**Status:**
+- :white_check_mark: Ready and actively Maintained
+- :hammer: In development, experimental
+- :warning: Not actively maintained
 
 | Package Name | Status | Description |
 | ------------ | ------ | ----------- |
