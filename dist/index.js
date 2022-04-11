@@ -5,10 +5,11 @@ const client_1 = require("@apollo/client");
 const schema_1 = require("@apollo/client/link/schema");
 const merge_1 = require("@graphql-tools/merge");
 const schema_2 = require("@graphql-tools/schema");
+const events_1 = require("events");
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-class EnyoSubgraph extends EventTarget {
+class EnyoSubgraph extends events_1.EventEmitter {
     writeQuery(options) {
-        this.dispatchEvent(new CustomEvent('writeQuery', { detail: options }));
+        this.emit('writeQuery', options);
     }
 }
 exports.EnyoSubgraph = EnyoSubgraph;
@@ -19,7 +20,7 @@ class EnyoSupergraph {
         this.providers = options.providers;
         this.subgraphs = options.subgraphs;
         for (const subgraph of this.subgraphs) {
-            subgraph.addEventListener('writeQuery', this.writeQuery.bind(this));
+            subgraph.on('writeQuery', this.writeQuery.bind(this));
         }
         if (apolloClient) {
             this.client = apolloClient;
@@ -44,10 +45,9 @@ class EnyoSupergraph {
     setClient(client) {
         this.client = client;
     }
-    writeQuery(ev) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const evt = ev;
-        this.client.writeQuery(evt.detail);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    writeQuery(options) {
+        this.client.writeQuery(options);
     }
 }
 exports.EnyoSupergraph = EnyoSupergraph;

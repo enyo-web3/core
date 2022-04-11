@@ -50,8 +50,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@metaphor-xyz/eslint-config", "npm:2.1.0"],\
             ["@rollup/plugin-typescript", "virtual:138c3475c1d818717bb0bedb61351865f5065a020d0f7f9bc09b568e7517c697af17d3da1cc6d9b428f24fb01ae0d66787e0bf181c9f3c949dc07f25c75e8218#npm:8.3.1"],\
             ["@rushstack/eslint-patch", "npm:1.1.2"],\
+            ["@types/events", "npm:3.0.0"],\
             ["@types/jest", "npm:27.4.1"],\
             ["eslint", "npm:8.13.0"],\
+            ["events", "npm:3.3.0"],\
             ["graphql", "npm:16.3.0"],\
             ["husky", "npm:7.0.4"],\
             ["jest", "virtual:138c3475c1d818717bb0bedb61351865f5065a020d0f7f9bc09b568e7517c697af17d3da1cc6d9b428f24fb01ae0d66787e0bf181c9f3c949dc07f25c75e8218#npm:27.5.1"],\
@@ -2914,8 +2916,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@metaphor-xyz/eslint-config", "npm:2.1.0"],\
             ["@rollup/plugin-typescript", "virtual:138c3475c1d818717bb0bedb61351865f5065a020d0f7f9bc09b568e7517c697af17d3da1cc6d9b428f24fb01ae0d66787e0bf181c9f3c949dc07f25c75e8218#npm:8.3.1"],\
             ["@rushstack/eslint-patch", "npm:1.1.2"],\
+            ["@types/events", "npm:3.0.0"],\
             ["@types/jest", "npm:27.4.1"],\
             ["eslint", "npm:8.13.0"],\
+            ["events", "npm:3.3.0"],\
             ["graphql", "npm:16.3.0"],\
             ["husky", "npm:7.0.4"],\
             ["jest", "virtual:138c3475c1d818717bb0bedb61351865f5065a020d0f7f9bc09b568e7517c697af17d3da1cc6d9b428f24fb01ae0d66787e0bf181c9f3c949dc07f25c75e8218#npm:27.5.1"],\
@@ -3956,6 +3960,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-estree-npm-0.0.39-f898500e96-412fb5b986.zip/node_modules/@types/estree/",\
           "packageDependencies": [\
             ["@types/estree", "npm:0.0.39"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/events", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/@types-events-npm-3.0.0-2eee0ea973-9a424c2da2.zip/node_modules/@types/events/",\
+          "packageDependencies": [\
+            ["@types/events", "npm:3.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6774,6 +6787,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/esutils-npm-2.0.3-f865beafd5-22b5b08f74.zip/node_modules/esutils/",\
           "packageDependencies": [\
             ["esutils", "npm:2.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["events", [\
+        ["npm:3.3.0", {\
+          "packageLocation": "./.yarn/cache/events-npm-3.3.0-c280bc7e48-f6f487ad21.zip/node_modules/events/",\
+          "packageDependencies": [\
+            ["events", "npm:3.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\

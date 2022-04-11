@@ -2,15 +2,16 @@ import { DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { mergeSchemas } from '@graphql-tools/schema';
+import { EventEmitter } from 'events';
 import { GraphQLSchema, DocumentNode } from 'graphql';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> extends EventTarget {
+export abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> extends EventEmitter {
   abstract schema(providers: Providers): GraphQLSchema;
   abstract typeDefs(): DocumentNode;
 
   protected writeQuery(options: DataProxy.WriteQueryOptions<TData, TVariables>) {
-    this.dispatchEvent(new CustomEvent('writeQuery', { detail: options }));
+    this.emit('writeQuery', options);
   }
 }
 
@@ -55,7 +56,7 @@ export class EnyoSupergraph<Subgraphs extends ReadonlyArray<EnyoSubgraph<EnyoPro
     this.subgraphs = options.subgraphs;
 
     for (const subgraph of this.subgraphs) {
-      subgraph.addEventListener('writeQuery', this.writeQuery.bind(this));
+      subgraph.on('writeQuery', this.writeQuery.bind(this));
     }
 
     if (apolloClient) {
@@ -85,10 +86,8 @@ export class EnyoSupergraph<Subgraphs extends ReadonlyArray<EnyoSubgraph<EnyoPro
     this.client = client;
   }
 
-  private writeQuery(ev: Event) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const evt = ev as CustomEvent<DataProxy.WriteQueryOptions<TData, any>>;
-
-    this.client.writeQuery(evt.detail);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private writeQuery(options: DataProxy.WriteQueryOptions<TData, any>) {
+    this.client.writeQuery(options);
   }
 }

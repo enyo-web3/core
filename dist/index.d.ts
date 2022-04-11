@@ -1,7 +1,8 @@
 import { DataProxy, ApolloClient, ApolloClientOptions } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
+import { EventEmitter } from 'events';
 import { GraphQLSchema, DocumentNode } from 'graphql';
-export declare abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> extends EventTarget {
+export declare abstract class EnyoSubgraph<Providers, TData = any, TVariables = any> extends EventEmitter {
     abstract schema(providers: Providers): GraphQLSchema;
     abstract typeDefs(): DocumentNode;
     protected writeQuery(options: DataProxy.WriteQueryOptions<TData, TVariables>): void;

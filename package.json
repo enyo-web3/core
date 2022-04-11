@@ -51,6 +51,8 @@
   "dependencies": {
     "@graphql-tools/merge": "^8.2.1",
     "@graphql-tools/schema": "^8.3.6",
+    "@types/events": "^3.0.0",
+    "events": "^3.3.0",
     "graphql": "^16"
   },
   "packageManager": "yarn@3.2.0"
