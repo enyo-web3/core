@@ -65,7 +65,12 @@ export class EnyoSupergraph<Subgraphs extends ReadonlyArray<EnyoSubgraph<EnyoPro
       // @ts-ignore
       // note(carlos): ignoring here because we know if `apolloClient` is missing,
       // then `options` includes the `ApolloClientOptions` parameters.
-      const client = new ApolloClient<TData>({ ...options, link: this.link(), typeDefs: this.typeDefs() });
+      const client = new ApolloClient<TData>({
+        ...options,
+        link: this.link(),
+        // @ts-ignore
+        typeDefs: this.typeDefs({ extraTypeDefs: options.typeDefs }),
+      });
       this.client = client;
     }
   }

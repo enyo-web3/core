@@ -29,7 +29,9 @@ class EnyoSupergraph {
             // @ts-ignore
             // note(carlos): ignoring here because we know if `apolloClient` is missing,
             // then `options` includes the `ApolloClientOptions` parameters.
-            const client = new client_1.ApolloClient(Object.assign(Object.assign({}, options), { link: this.link(), typeDefs: this.typeDefs() }));
+            const client = new client_1.ApolloClient(Object.assign(Object.assign({}, options), { link: this.link(), 
+                // @ts-ignore
+                typeDefs: this.typeDefs({ extraTypeDefs: options.typeDefs }) }));
             this.client = client;
         }
     }
